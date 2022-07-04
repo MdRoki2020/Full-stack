@@ -1,58 +1,32 @@
 import './App.css';
-import Axios from 'axios';
-import {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Table} from 'react-bootstrap'
+import {BrowserRouter as Router,Routes,Route,Link} from "react-router-dom";
+import {Navbar,Container,Nav} from 'react-bootstrap'
+import Home from './Pages/Home';
+import Createpost from './Pages/Createpost'
 
 function App() {
-
-  const [listOfPosts,setListOfPosts]=useState([])
-
-  useEffect(()=>{
-    Axios.get('http://localhost:3001/posts').then((res)=>{
-      setListOfPosts(res.data);
-      console.log(res.data)
-    })
-  },[]);
-
   return (
     <div>
-      <h2 className='text-center'>Dashboard</h2>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-md-2'></div>
-          <div className='col-md-8'>
-        <h4>SHOW USER</h4>
-        <hr/>
-        <Table className='striped bordered hover'>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Post Text</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-          <tbody>
+      <Router>
 
-          {
-              listOfPosts.map((value)=>
-              <tr key={value.id}>
-                <td>{value.id}</td>
-                <td>{value.title}</td>
-                <td>{value.postText}</td>
-                <td>{value.username}</td>
-              </tr>
-              )
-            }
+      <Navbar bg="light" variant="light">
+          <Container>
+          <Navbar.Brand as={Link} to={'/'}>Navbar</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to={'/'}>Home</Nav.Link>
+            <Nav.Link as={Link} to={"/createpost"}>Create Post</Nav.Link>
+            <Nav.Link as={Link} to={"/something"}>Something</Nav.Link>
+          </Nav>
+          </Container>
+      </Navbar>
 
-          </tbody>
-        </Table>
-        </div>
-          <div className='col-sm-2'></div>
-        </div>
-      </div>
-      
+        <Routes>
+          <Route path="/" exact element={ <Home /> } />
+          <Route path="/createpost" element={ <Createpost /> } />
+          <Route path="/something" element={ <Home /> } />
+        </Routes>
+      </Router>
     </div>
   );
 }
