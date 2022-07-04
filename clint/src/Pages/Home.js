@@ -15,7 +15,7 @@ function Home() {
 
   return (
     <div>
-      <h2 className='text-center'>Dashboard</h2>
+      <h2 className='text-center my-3'>Dashboard</h2>
       <div className='container'>
         <div className='row'>
           <div className='col-md-2'></div>
