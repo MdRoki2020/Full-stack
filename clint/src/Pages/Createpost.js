@@ -2,12 +2,15 @@ import React from 'react'
 import Axios from 'axios';
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import * as Yup from 'yup'
+import { useNavigate } from 'react-router-dom';
 
 function Createpost() {
 
+    let navigate = useNavigate ();
+
     const onSubmit=(data)=>{
         Axios.post('http://localhost:3001/posts',data).then((res)=>{
-          console.log("its work");
+            navigate('/');
         })
     }
 

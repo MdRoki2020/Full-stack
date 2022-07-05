@@ -1,15 +1,18 @@
+import React from 'react';
 import Axios from 'axios';
 import {useEffect, useState} from 'react';
-import {Table} from 'react-bootstrap'
+import { Card} from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
 
     const [listOfPosts,setListOfPosts]=useState([])
 
+    let navigate = useNavigate ();
+
     useEffect(()=>{
-        Axios.get('http://localhost:3001/posts').then((res)=>{
+        Axios.get("http://localhost:3001/posts").then((res)=>{
           setListOfPosts(res.data);
-          console.log(res.data)
         })
       },[]);
 
@@ -22,30 +25,23 @@ function Home() {
           <div className='col-md-8'>
         <h4>SHOW USER</h4>
         <hr/>
-        <Table className='striped bordered hover'>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Post Text</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-          <tbody>
 
-          {
-              listOfPosts.map((value)=>
-              <tr key={value.id}>
-                <td>{value.id}</td>
-                <td>{value.title}</td>
-                <td>{value.postText}</td>
-                <td>{value.username}</td>
-              </tr>
-              )
-            }
+        {
+            listOfPosts.map((value)=>
+          
+            <Card style={{ width: '18rem' }} className='mb-3'>
+              <Card.Body onClick={() => {navigate(`/post/${value.id}`);}}>
+                <Card.Title>{value.title}</Card.Title>
+                <Card.Text>
+                  {value.postText}
+                </Card.Text>
+                <b>{value.username}</b>
+              </Card.Body>
+            </Card>
 
-          </tbody>
-        </Table>
+            )
+        }
+
         </div>
           <div className='col-sm-2'></div>
         </div>

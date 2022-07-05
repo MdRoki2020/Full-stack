@@ -4,6 +4,7 @@ import {BrowserRouter as Router,Routes,Route,Link} from "react-router-dom";
 import {Navbar,Container,Nav} from 'react-bootstrap'
 import Home from './Pages/Home';
 import Createpost from './Pages/Createpost'
+import Post from './Pages/Post';
 
 function App() {
   return (
@@ -16,7 +17,6 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link as={Link} to={'/'}>Home</Nav.Link>
             <Nav.Link as={Link} to={"/createpost"}>Create Post</Nav.Link>
-            <Nav.Link as={Link} to={"/something"}>Something</Nav.Link>
           </Nav>
           </Container>
       </Navbar>
@@ -24,7 +24,7 @@ function App() {
         <Routes>
           <Route path="/" exact element={ <Home /> } />
           <Route path="/createpost" element={ <Createpost /> } />
-          <Route path="/something" element={ <Home /> } />
+          <Route path="/post/:id" element={ <Post /> } />
         </Routes>
       </Router>
     </div>
