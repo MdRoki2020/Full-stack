@@ -1,18 +1,37 @@
 import React,{useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom';
-import {Card} from 'react-bootstrap';
+import {Card,Table} from 'react-bootstrap';
 import Axios from 'axios';
 
 function Post() {
 
     let {id}=useParams();
     const [postObject,setPostObject]=useState({});
+
+    const [comments,setComments]=useState([])
+
+    const [newComment,setNewComment]=useState("");
     
     useEffect(() => {
         Axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
             setPostObject(response.data);
         });
-      });
+
+        //for comments
+        Axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+          setComments(response.data);
+        });
+
+
+      },[]);
+
+      const addComment=()=>{
+        Axios.post('http://localhost:3001/comments',{commentBody:newComment, PostId:id}).then((res)=>{
+          const commentToAdd={commentBody:newComment};
+          setComments([...comments,commentToAdd]);
+          setNewComment('');
+        })
+      }
 
   return (
     <div>
@@ -37,8 +56,34 @@ function Post() {
                 
             </div>
             <div className='col-md-4'>
-                <h3>Comment</h3>
+                <h3>Comments</h3>
                 <hr />
+
+                <div className=''>
+                <input onChange={(e)=>{setNewComment(e.target.value)}} value={newComment} autoComplete='off' type='text' className='form-control'  placeholder='Your Comment'/>
+                <button onClick={addComment} type='submit' className='my-2 btn btn-primary'>Add comment</button>
+                </div>
+
+                <div className='showComment'>
+                <Table className='striped bordered hover'>
+          <thead>
+            <tr>
+              <th>Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          {
+              comments.map((value)=>
+              <tr key={value.id}>
+                <td>{value.commentBody}</td>
+              </tr>
+              )
+            }
+
+          </tbody>
+        </Table>
+                </div>
             </div>
         </div>
       </div>
