@@ -5,6 +5,8 @@ import {Navbar,Container,Nav} from 'react-bootstrap'
 import Home from './Pages/Home';
 import Createpost from './Pages/Createpost'
 import Post from './Pages/Post';
+import Registration from './Pages/Registration';
+import Login from './Pages/Login';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route path="/" exact element={ <Home /> } />
           <Route path="/createpost" element={ <Createpost /> } />
           <Route path="/post/:id" element={ <Post /> } />
+          <Route path="/registration" element={ <Registration /> } />
+          <Route path="/login" element={ <Login /> } />
         </Routes>
       </Router>
     </div>
