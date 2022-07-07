@@ -19,8 +19,17 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link as={Link} to={'/'}>Home</Nav.Link>
             <Nav.Link as={Link} to={"/createpost"}>Create Post</Nav.Link>
-            <Nav.Link as={Link} to={'/registration'}>Registration</Nav.Link>
-            <Nav.Link as={Link} to={"/login"}>Login</Nav.Link>
+            {
+              !localStorage.getItem("accessToken") && (
+                <>
+
+                <Nav.Link as={Link} to={'/registration'}>Registration</Nav.Link>
+                <Nav.Link as={Link} to={"/login"}>Login</Nav.Link>
+
+                </>
+              )
+            }
+            
           </Nav>
           </Container>
       </Navbar>
