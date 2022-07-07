@@ -40,7 +40,7 @@ function Post() {
           if(res.data.error){
             console.log(res.data.err)
           }else{
-          const commentToAdd={commentBody:newComment};
+          const commentToAdd={commentBody:newComment,username:res.data.username};
           setComments([...comments,commentToAdd]);
           setNewComment('');
           }
@@ -90,7 +90,8 @@ function Post() {
           {
               comments.map((value)=>
               <tr key={value.id}>
-                <td>{value.commentBody}</td>
+                
+                <td><b>{value.username}</b> :     {value.commentBody}</td>
               </tr>
               )
             }
