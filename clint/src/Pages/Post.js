@@ -1,7 +1,9 @@
-import React,{useEffect, useState} from 'react'
+import React,{useContext, useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom';
 import {Card,Table} from 'react-bootstrap';
 import Axios from 'axios';
+import { AuthContext } from '../helpers/AuthContext'
+
 
 function Post() {
 
@@ -11,6 +13,9 @@ function Post() {
     const [comments,setComments]=useState([])
 
     const [newComment,setNewComment]=useState("");
+
+    const {authState}=useContext(AuthContext);
+
     
     useEffect(() => {
         Axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
@@ -45,6 +50,14 @@ function Post() {
           setNewComment('');
           }
         })
+      }
+
+      const deleteComment=(id)=>{
+        Axios.delete(`http://localhost:3001/comments/${id}`,{
+          headers:{accessToken:localStorage.getItem("accessToken")},
+        }).then(()=>{
+          alert("token deleted");
+        });
       }
 
   return (
@@ -91,7 +104,7 @@ function Post() {
               comments.map((value)=>
               <tr key={value.id}>
                 
-                <td><b>{value.username}</b> :     {value.commentBody}</td>
+                <td><b>{value.username}</b> : {value.commentBody} {authState.useState===comments.username && <button onClick={()=>{deleteComment(value.id)}} className='btn btn-primary'>X</button> } </td>
               </tr>
               )
             }

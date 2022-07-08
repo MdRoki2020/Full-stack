@@ -31,7 +31,7 @@ router.post('/login', async (req,res)=>{
           "importantsecret"
         );
 
-        res.json(accessTocken);
+        res.json({token:accessTocken,username:username, id:user.id});
     });
 });
 
