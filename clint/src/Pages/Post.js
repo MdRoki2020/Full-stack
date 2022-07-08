@@ -52,13 +52,19 @@ function Post() {
         })
       }
 
-      const deleteComment=(id)=>{
-        Axios.delete(`http://localhost:3001/comments/${id}`,{
-          headers:{accessToken:localStorage.getItem("accessToken")},
-        }).then(()=>{
-          alert("token deleted");
-        });
-      }
+      const deleteComment = (id) => {
+        Axios
+          .delete(`http://localhost:3001/comments/${id}`, {
+            headers: { accessToken: localStorage.getItem("accessToken") },
+          })
+          .then(() => {
+            setComments(
+              comments.filter((val) => {
+                return val.id != id;
+              })
+            );
+          });
+      };
 
   return (
     <div>
